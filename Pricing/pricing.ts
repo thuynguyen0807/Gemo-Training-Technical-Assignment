@@ -22,21 +22,16 @@ enum Milk {
     AlmondMilk = 'Almond Milk' 
 }
 
-// Function calculated price 1
-
-type CoffeeItemBase = {
-    drinkType: DrinkType;
-    size: Size;
-    isIncludeWhippedCream: boolean;
-    quantity: number;
+enum Topping {
+    None = 'None',
+    whippedCream = 'whippedCream'
 }
 
-const calculatePrice1 = (coffeeItems: CoffeeItemBase[]) => {
-    let totalCost = 0;
+// Function calculated price 1
 
-    coffeeItems.map((coffee) => {
+const calculatePrice1 = (drinkType: DrinkType, size: Size, isIncludeWhippedCream: boolean) => {
         let cost = 0;
-        switch (coffee.drinkType) {
+        switch (drinkType) {
             case DrinkType.Hot:
             case DrinkType.Cold:
                 cost += 2;
@@ -47,12 +42,12 @@ const calculatePrice1 = (coffeeItems: CoffeeItemBase[]) => {
                 break;
         }
     
-        switch(coffee.size) {
+        switch(size) {
             case Size.M:
                 cost += 0.5;
                 break;
             case Size.L:
-                if (coffee.drinkType === DrinkType.Hot) {
+                if (drinkType === DrinkType.Hot) {
                     console.log('Hot drink does not include L'); 
                     return;
                 }
@@ -62,35 +57,21 @@ const calculatePrice1 = (coffeeItems: CoffeeItemBase[]) => {
                 break;
         }
     
-        if (coffee.isIncludeWhippedCream) {
+        if (isIncludeWhippedCream) {
             cost += 0.5;
         }
-
-        totalCost = totalCost + cost * coffee.quantity;
-    })
     
-    return totalCost;
+        return cost;
 }
 
-const totalCostOfCoffeeOrder1 = calculatePrice1([{drinkType: DrinkType.Cold, size: Size.M, isIncludeWhippedCream: true, quantity: 2}])
+const totalCostOfCoffeeOrder1 = calculatePrice1(DrinkType.Cold, Size.M, true)
 console.log("Total cost of a coffee order 1: ", totalCostOfCoffeeOrder1);
 
 // Function calculated price 2
 
-type CoffeeSomeTopping = {
-    drinkType: DrinkType;
-    size: Size;
-    isIncludeWhippedCream: boolean;
-    milk?: Milk;
-    quantity: number;
-}
-
-const calculatePrice2 = (coffeeItems: CoffeeSomeTopping[]) => {
-    let totalCost = 0;
-
-    coffeeItems.map((coffee) => {
-        let cost = 0;
-        switch (coffee.drinkType) {
+const calculatePrice2 = (drinkType: DrinkType, size: Size, isIncludeWhippedCream: boolean, milk: Milk) => {
+    let cost = 0;
+        switch (drinkType) {
             case DrinkType.Hot:
             case DrinkType.Cold:
                 cost += 2;
@@ -101,12 +82,12 @@ const calculatePrice2 = (coffeeItems: CoffeeSomeTopping[]) => {
                 break;
         }
     
-        switch(coffee.size) {
+        switch(size) {
             case Size.M:
                 cost += 0.5;
                 break;
             case Size.L:
-                if (coffee.drinkType === DrinkType.Hot) {
+                if (drinkType === DrinkType.Hot) {
                     console.log('Hot drink does not include L'); 
                     return;
                 }
@@ -116,26 +97,23 @@ const calculatePrice2 = (coffeeItems: CoffeeSomeTopping[]) => {
                 break;
         }
     
-        if (coffee.isIncludeWhippedCream) {
+        if (isIncludeWhippedCream) {
             cost += 0.5;
         }
 
-        if (coffee.milk) {
+        if (milk === Milk.AlmondMilk) {
             cost += 1.5;
         }
-
-        totalCost = totalCost + cost * coffee.quantity;
-    })
     
-    return totalCost;
+        return cost;
 }
 
-const totalCostOfCoffeeOrder2 = calculatePrice2([{drinkType: DrinkType.Cold, size: Size.M, isIncludeWhippedCream: true, milk: Milk.AlmondMilk, quantity: 2}])
+const totalCostOfCoffeeOrder2 = calculatePrice2(DrinkType.Cold, Size.M, true, Milk.AlmondMilk)
 console.log("Total cost of a coffee order 2: ", totalCostOfCoffeeOrder2)
 
 // Function calculated price 3
 
-type CoffeeFullTopping = {
+type CoffeeWithFullTopping = {
     drinkType: DrinkType;
     size: Size;
     isIncludeWhippedCream: boolean;
@@ -144,72 +122,56 @@ type CoffeeFullTopping = {
     quantity: number;
 }
 
-const calculatePrice3 = (coffeeItems: CoffeeFullTopping[]) => {
-    let totalCost = 0;
+const calculatePrice3 = (drinkType: DrinkType, size: Size, isIncludeWhippedCream: boolean, milk: Milk, chocolateSauce: number) => {
+    let cost = 0;
+    switch (drinkType) {
+        case DrinkType.Hot:
+        case DrinkType.Cold:
+            cost += 2;
+            break;
+        case DrinkType.Blended:
+            cost += 3;
+        default:
+            break;
+    }
 
-    coffeeItems.map((coffee) => {
-        let cost = 0;
-        switch (coffee.drinkType) {
-            case DrinkType.Hot:
-            case DrinkType.Cold:
-                cost += 2;
-                break;
-            case DrinkType.Blended:
-                cost += 3;
-            case DrinkType.MilkTea:
-                cost = 2.25;
-                break;
-            default:
-                break;
-        }
-    
-        switch(coffee.size) {
-            case Size.M:
-                cost += 0.5;
-                break;
-            case Size.L:
-                if (coffee.drinkType === DrinkType.Hot) {
-                    console.log('Hot drink does not include L'); 
-                    return;
-                }
-                cost += 1;
-                break;
-            case Size.XL:
-                if (coffee.drinkType === DrinkType.Hot) {
-                    console.log('Hot drink does not include L'); 
-                    return;
-                }
-                cost += 1.5;
-                break;
-            default:
-                break;
-        }
-    
-        if (coffee.isIncludeWhippedCream) {
+    switch(size) {
+        case Size.M:
             cost += 0.5;
-        }
-
-        if (coffee.milk) {
-            cost += 1.5;
-        }
-
-        if (coffee.chocolateSauce) {
-            if (coffee.drinkType === DrinkType.Hot && coffee.chocolateSauce <= 6) {
-                const costedChocolateSauce = coffee.chocolateSauce - 2;
-                cost += costedChocolateSauce > 1 ? costedChocolateSauce * 0.5 : 0;
-            } else {
-                console.log('Chocolate sauce is only included for hot drink maximum with 6 pumbs.');
+            break;
+        case Size.L:
+            if (drinkType === DrinkType.Hot) {
+                console.log('Hot drink does not include L'); 
                 return;
             }
-        }
+            cost += 1;
+            break;
+        default:
+            break;
+    }
 
-        totalCost = totalCost + cost * coffee.quantity;
-    })
-    
-    return totalCost;
+    if (isIncludeWhippedCream) {
+        cost += 0.5;
+    }
+
+    if (milk === Milk.AlmondMilk) {
+        cost += 1.5;
+    }
+
+    if (chocolateSauce) {
+        if (drinkType === DrinkType.Hot && chocolateSauce <= 6) {
+            const costedChocolateSauce = chocolateSauce - 2;
+            cost += costedChocolateSauce > 1 ? costedChocolateSauce * 0.5 : 0;
+        } else {
+            console.log('Chocolate sauce is only included for hot drink maximum with 6 pumbs.');
+            return;
+        }
+    }
+
+    return cost;
 }
 
-const totalCostOfCoffeeOrder3 = calculatePrice3([{drinkType: DrinkType.Cold, size: Size.M, isIncludeWhippedCream: true, milk: Milk.WholeMilk, chocolateSauce: 4, quantity: 2}])
+const totalCostOfCoffeeOrder3 = calculatePrice3(DrinkType.Cold, Size.M, true, Milk.WholeMilk, 4)
 console.log('Total cost of a coffee order 2: ', totalCostOfCoffeeOrder3);
 
 // Function calculated price 4
@@ -220,40 +182,79 @@ type BreakFastItem = {
     quantity: number;
 }
 
-const calculatePrice4 = (breakfastItems: BreakFastItem[]) => {
-    let totalCostOfOrder = 0;
+const calculatePrice4 = (drinkType: DrinkType, size: Size, isIncludeWhippedCream: boolean, milk: Milk, chocolateSauce: number, type: BreakFast, isIncludeTopping: boolean) => {
+    let costOfDrink = 0;
+    switch (drinkType) {
+        case DrinkType.Hot:
+        case DrinkType.Cold:
+            costOfDrink += 2;
+            break;
+        case DrinkType.Blended:
+            costOfDrink += 3;
+        default:
+            break;
+    }
 
-    breakfastItems.map((item) => {
-        let costOfBreakfastItem = 0;
+    switch(size) {
+        case Size.M:
+            costOfDrink += 0.5;
+            break;
+        case Size.L:
+            if (drinkType === DrinkType.Hot) {
+                console.log('Hot drink does not include L'); 
+                return;
+            }
+            costOfDrink += 1;
+            break;
+        default:
+            break;
+    }
 
-        switch(item.type) {
-            case BreakFast.Sandwich:
-                if (item.isIncludeTopping) {
-                    costOfBreakfastItem += 4;
-                } else {
-                    costOfBreakfastItem += 3;
-                }
-                break;
-            default:
-                if (item.isIncludeTopping) {
-                    costOfBreakfastItem += 3.5;
-                } else {
-                    costOfBreakfastItem += 3;
-                }
+    if (isIncludeWhippedCream) {
+        costOfDrink += 0.5;
+    }
+
+    if (milk === Milk.AlmondMilk) {
+        costOfDrink += 1.5;
+    }
+
+    if (chocolateSauce) {
+        if (drinkType === DrinkType.Hot && chocolateSauce <= 6) {
+            const costedChocolateSauce = chocolateSauce - 2;
+            costOfDrink += costedChocolateSauce > 1 ? costedChocolateSauce * 0.5 : 0;
+        } else {
+            console.log('Chocolate sauce is only included for hot drink maximum with 6 pumbs.');
+            return;
         }
-        totalCostOfOrder = totalCostOfOrder + costOfBreakfastItem * item.quantity;
-    })
-    
+    }
 
-    return totalCostOfOrder;
+    let costOfBreakfast = 0;
+
+    switch(type) {
+        case BreakFast.Sandwich:
+            if (isIncludeTopping) {
+                costOfBreakfast += 4;
+            } else {
+                costOfBreakfast += 3;
+            }
+            break;
+        default:
+            if (isIncludeTopping) {
+                costOfBreakfast += 3.5;
+            } else {
+                costOfBreakfast += 3;
+            }
+    }
+
+    return costOfDrink + costOfBreakfast;
 }
 
-const totalCostOfOrder = calculatePrice4([{type: BreakFast.Sandwich, isIncludeTopping: false, quantity: 2}])
+const totalCostOfOrder = calculatePrice4(DrinkType.Cold, Size.M, true, Milk.WholeMilk, 4, BreakFast.Sandwich, false)
 console.log('Total cost of an order for breakfast: ', totalCostOfOrder);
 
 // Function calculated price 5
 
-const calculatePrice5 = (coffeeItems: CoffeeFullTopping[], breakfastItems: BreakFastItem[]) => {
+const calculatePrice5 = (coffeeItems: CoffeeWithFullTopping[], breakfastItems: BreakFastItem[]) => {
     let totalCost = 0;
 
     coffeeItems.map((coffee) => {
@@ -337,7 +338,7 @@ const calculatePrice5 = (coffeeItems: CoffeeFullTopping[], breakfastItems: Break
         totalCost = totalCost + cost * item.quantity;
     })
 
-    const finalCost = totalCost - totalCost * 0.0725;
+    const finalCost = totalCost + totalCost * 0.0725;
 
     return finalCost;
 }
