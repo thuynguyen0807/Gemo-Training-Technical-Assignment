@@ -19,10 +19,17 @@ export enum BreakFast {
 
 export enum Milk {
     WholeMilk = 'Whole Milk',
-    AlmondMilk = 'Almond Milk' 
+    AlmondMilk = 'Almond Milk',
+    None = 'None'
 }
 
 export enum Topping {
     None = 'None',
     whippedCream = 'whippedCream'
+}
+
+export enum MenuType {
+    Coffee = "Coffee",
+    BreakFast = "BreakFast",
+
 }
