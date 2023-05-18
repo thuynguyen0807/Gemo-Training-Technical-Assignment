@@ -1,15 +1,11 @@
 "use client";
-import EditingOrderItem from "@/components/editingOrderItem";
+import OrderBreakfastItem, {
+  BreakFastItem,
+} from "@/components/OrderBreakfastItem";
+import OrderCoffeeItem from "@/components/OrderCoffeeItem";
 import PlusIcon from "@/components/plusIcon";
-import { BreakFast, DrinkType, MenuType, Milk, Size, Topping } from "@/types";
-import { FC, useRef, useState } from "react";
-
-const coffeeToppings = [
-  { value: "whippedCream", label: "Whipped Cream" },
-  { value: "wholeMilk", label: "Whole Milk" },
-  { value: "almondMilk", label: "Almond Milk" },
-  { value: "chocolateSauce", label: "Chocolate Sauce" },
-];
+import { BreakFast, DrinkType, Milk, Topping } from "@/types";
+import { FC, useState } from "react";
 
 export interface Options {
   readonly value: string;
@@ -18,17 +14,15 @@ export interface Options {
 }
 
 const toppingOptions: Options[] = [
-  { value: "milk", label: "Milk" },
-  { value: "chocolate", label: "Chocolate" },
-  { value: "whippedCream", label: "Whipped Cream" },
-  { value: "whippedCream1", label: "Whipped Cream1" },
+  { value: "none", label: Topping.None },
+  { value: "whippedCream", label: Topping.WhippedCream },
 ];
 
 const sizeOptions: Options[] = [
-  { value: "s", label: "S" },
-  { value: "m", label: "M" },
-  { value: "l", label: "L" },
-  { value: "xl", label: "XL" },
+  { value: "S", label: "S" },
+  { value: "M", label: "M" },
+  { value: "L", label: "L" },
+  { value: "XL", label: "XL" },
 ];
 
 const drinkTypes = [
@@ -40,11 +34,35 @@ const drinkTypes = [
 
 const breakfastItems = [BreakFast.Sandwich, BreakFast.Bagel];
 
-const milkOptions = [{ value: "s", label: "S" },
+const milkOptions = [
   { value: Milk.None, label: Milk.None },
   { value: Milk.AlmondMilk, label: Milk.AlmondMilk },
-  { value: Milk.AlmondMilk, label: Milk.AlmondMilk },
-]
+  { value: Milk.WholeMilk, label: Milk.WholeMilk },
+];
+
+enum SandwichTopping {
+  Egg = "Egg",
+  Turkey = "Turkey",
+  None = "None",
+}
+
+enum BagelTopping {
+  Butter = "Butter",
+  CreamCheese = "Cream Cheese",
+  None = "None",
+}
+
+const sandwichToppings = [
+  { value: "egg", label: SandwichTopping.Egg },
+  { value: "turkey", label: SandwichTopping.Turkey },
+  { value: "none", label: SandwichTopping.None },
+];
+
+const bagelToppings = [
+  { value: "butter", label: BagelTopping.Butter },
+  { value: "creamCheese", label: BagelTopping.CreamCheese },
+  { value: "none", label: BagelTopping.None },
+];
 
 export type Coffee = {
   drinkType: DrinkType;
@@ -53,47 +71,18 @@ export type Coffee = {
   milk: string;
   chocolateSauce: number;
   quantity: number;
-}
-
-const defaultCoffee: Coffee = {
-  drinkType: DrinkType.Hot,
-  size: Size.S,
-  milk: Milk.None,
-  chocolateSauce: 0,
-  quantity: 1,
-  topping: Topping.None
-}
+};
 
 const Order: FC = () => {
-  const [coffee, setCoffee] = useState<Coffee>(defaultCoffee);
-  const coffeeItems = useRef([]);
-  const handleToppingChanged = (
-    value: Options
-  ) => {
-    setCoffee({...coffee, topping: value.value});
+  const [totalCost, setTotalCost] = useState<number>(0);
+
+  const handleCoffeeItemAdded = (cost: number) => {
+    setTotalCost(totalCost + cost);
   };
 
-  const handleSizeChanged = (
-    value: Options
-  ) => {
-    setCoffee({...coffee, size: value.value});
+  const handleBreakfastItemAdded = (cost: number) => {
+    setTotalCost(totalCost + cost);
   };
-
-  const handlePumpOfChocolateChanged = (value: number) => {
-    setCoffee({...coffee, chocolateSauce: value});
-  }
-
-  const handleQuantityChanged = (value: number) => {
-    setCoffee({...coffee, chocolateSauce: value});
-  }
-
-  const handleMilkChanged = (value: Options) => {
-    setCoffee({...coffee, milk: value.value});
-  }
-
-  const handleItemAdded = () => {
-
-  }
 
   return (
     <div className="flex min-h-screen p-16">
@@ -111,18 +100,13 @@ const Order: FC = () => {
             </div>
             {drinkTypes.map((item) => (
               <div className="pl-8 pt-4" key={item}>
-                <EditingOrderItem
-                  foodItem={item}
+                <OrderCoffeeItem
                   toppingOptions={toppingOptions}
                   sizeOptions={sizeOptions}
-                  onToppingChanged={handleToppingChanged}
-                  onSizeChanged={handleSizeChanged}
-                  onItemAdded={handleItemAdded}
-                  menuType={MenuType.Coffee} 
-                  onChocolateSauceChanged={handlePumpOfChocolateChanged} 
-                  onMilkChanged={handleMilkChanged}     
-                  onQuantityChanged={handleQuantityChanged}
-                  milkOptions={milkOptions}           />
+                  onCoffeeItemAdded={handleCoffeeItemAdded}
+                  milkOptions={milkOptions}
+                  drinkType={item}
+                />
               </div>
             ))}
           </div>
@@ -137,17 +121,20 @@ const Order: FC = () => {
             </div>
             {breakfastItems.map((item) => (
               <div className="pl-8 pt-4" key={item}>
-                <EditingOrderItem
-                  menuType={MenuType.BreakFast}
-                  foodItem={item}
-                  toppingOptions={toppingOptions}
-                  onToppingChanged={handleToppingChanged}
-                  onQuantityChanged={handleQuantityChanged}
-                  onItemAdded={handleItemAdded}     
-                  />
+                <OrderBreakfastItem
+                  type={item}
+                  toppingOptions={
+                    item === BreakFast.Sandwich
+                      ? sandwichToppings
+                      : bagelToppings
+                  }
+                  onBreakfastItemAdded={handleBreakfastItemAdded}
+                />
               </div>
             ))}
           </div>
+          {/* Cost */}
+          <p className="font-black mt-6 ml-8">{`Total cost: $${totalCost}`}</p>
         </div>
       </div>
     </div>

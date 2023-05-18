@@ -25,7 +25,7 @@ export enum Milk {
 
 export enum Topping {
     None = 'None',
-    whippedCream = 'whippedCream'
+    WhippedCream = 'Whipped Cream'
 }
 
 export enum MenuType {
