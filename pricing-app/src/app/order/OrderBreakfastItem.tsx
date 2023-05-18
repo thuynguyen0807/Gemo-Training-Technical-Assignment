@@ -1,6 +1,6 @@
 import { BreakFast, DrinkType, MenuType, Milk, Size, Topping } from "@/types";
 import { FC, useState } from "react";
-import SelectionBox from "./selectionBox";
+import SelectionBox from "../../components/selectionBox";
 import { Coffee, Options } from "@/app/order/page";
 
 enum SandwichTopping {
@@ -38,9 +38,29 @@ const OrderBreakfastItem: FC<Props> = ({
   toppingOptions,
   onBreakfastItemAdded,
 }: Props) => {
-  const [breakfastItem, setBreakfastItem] =
-    useState<BreakFastItem>(defaultBreakfastItem);
-  const [cost, setCost] = useState<number>(0);
+  const [breakfastItem, setBreakfastItem] = useState<BreakFastItem>(defaultBreakfastItem);
+  const calculateCost = (): number => {
+    let costOfBreakfast = 0;
+
+    switch (type) {
+      case BreakFast.Sandwich:
+        if (breakfastItem.topping !== SandwichTopping.None) {
+          costOfBreakfast += 4;
+        } else {
+          costOfBreakfast += 3;
+        }
+        break;
+      default:
+        if (breakfastItem.topping !== BagelTopping.None) {
+          costOfBreakfast += 3.5;
+        } else {
+          costOfBreakfast += 3;
+        }
+    }
+
+    return costOfBreakfast * breakfastItem.quantity;
+  };
+  const [cost, setCost] = useState<number>(calculateCost());
   const handleToppingChanged = (value: Options) => {
     setBreakfastItem({ ...breakfastItem, topping: value.value });
   };
@@ -49,33 +69,11 @@ const OrderBreakfastItem: FC<Props> = ({
     setBreakfastItem({ ...breakfastItem, quantity: value });
   };
 
-  const calculateCost = (): number => {
-    let costOfBreakfast = 0;
-
-    switch(type) {
-        case BreakFast.Sandwich:
-            if (breakfastItem.topping !== SandwichTopping.None) {
-                costOfBreakfast += 4;
-            } else {
-                costOfBreakfast += 3;
-            }
-            break;
-        default:
-            if (breakfastItem.topping !== BagelTopping.None) {
-                costOfBreakfast += 3.5;
-            } else {
-                costOfBreakfast += 3;
-            }
-    }
-
-    return costOfBreakfast;
-  }
-
   const handleBreakfastItemAdded = () => {
-    const cost = calculateCost() * breakfastItem.quantity;
+    const cost = calculateCost();
     setCost(cost);
     onBreakfastItemAdded(cost);
-  }
+  };
 
   return (
     <div>

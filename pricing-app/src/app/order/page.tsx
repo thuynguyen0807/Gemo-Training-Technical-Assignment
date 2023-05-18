@@ -1,10 +1,9 @@
 "use client";
-import OrderBreakfastItem, {
-  BreakFastItem,
-} from "@/components/OrderBreakfastItem";
-import OrderCoffeeItem from "@/components/OrderCoffeeItem";
+import OrderBreakfastItem from "@/app/order/OrderBreakfastItem";
+import OrderCoffeeItem from "@/app/order/OrderCoffeeItem";
 import PlusIcon from "@/components/plusIcon";
-import { BreakFast, DrinkType, Milk, Topping } from "@/types";
+import { BreakFast, DrinkType, Milk, Size, Topping } from "@/types";
+import { BagelTopping, SandwichTopping } from "@/types/enum";
 import { FC, useState } from "react";
 
 export interface Options {
@@ -19,10 +18,15 @@ const toppingOptions: Options[] = [
 ];
 
 const sizeOptions: Options[] = [
-  { value: "S", label: "S" },
-  { value: "M", label: "M" },
-  { value: "L", label: "L" },
-  { value: "XL", label: "XL" },
+  { value: "S", label: Size.S },
+  { value: "M", label: Size.M },
+  { value: "L", label: Size.L },
+  { value: "XL", label: Size.XL },
+];
+
+const sizeOptionsForHotDrink: Options[] = [
+  { value: "S", label: Size.S },
+  { value: "M", label: Size.M }
 ];
 
 const drinkTypes = [
@@ -39,18 +43,6 @@ const milkOptions = [
   { value: Milk.AlmondMilk, label: Milk.AlmondMilk },
   { value: Milk.WholeMilk, label: Milk.WholeMilk },
 ];
-
-enum SandwichTopping {
-  Egg = "Egg",
-  Turkey = "Turkey",
-  None = "None",
-}
-
-enum BagelTopping {
-  Butter = "Butter",
-  CreamCheese = "Cream Cheese",
-  None = "None",
-}
 
 const sandwichToppings = [
   { value: "egg", label: SandwichTopping.Egg },
@@ -88,7 +80,7 @@ const Order: FC = () => {
     <div className="flex min-h-screen p-16">
       <div className="border w-full bg-white rounded-md">
         <div className="flex justify-center mt-8">
-          <h1 className=" text-black">ABC Coffee Shop</h1>
+          <h1 className=" font-black text-xl">Garden Cafeteria</h1>
         </div>
         <div className="p-8">
           <div className="mb-12">
@@ -102,7 +94,7 @@ const Order: FC = () => {
               <div className="pl-8 pt-4" key={item}>
                 <OrderCoffeeItem
                   toppingOptions={toppingOptions}
-                  sizeOptions={sizeOptions}
+                  sizeOptions={item !== DrinkType.Hot ? sizeOptions : sizeOptionsForHotDrink}
                   onCoffeeItemAdded={handleCoffeeItemAdded}
                   milkOptions={milkOptions}
                   drinkType={item}

@@ -18,6 +18,7 @@ const SelectionBox: FC<Props> = ({isMulti, options, onChange}) => {
       isMulti={isMulti}
       className="basic-multi-select"
       classNamePrefix="select"
+      defaultValue={options[0]}
       options={options}
       onChange={onChange}
     />
