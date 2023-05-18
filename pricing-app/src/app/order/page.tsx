@@ -26,6 +26,9 @@ const Order: FC = () => {
     setTotalCost(totalCost + cost);
   };
 
+  const tax = totalCost * 0.0725;
+  const finalCost = totalCost + tax;
+
   return (
     <div className="flex min-h-screen p-16">
       <div className="border w-full bg-white rounded-md">
@@ -82,6 +85,8 @@ const Order: FC = () => {
           </div>
           {/* Cost */}
           <p className="font-black mt-6 ml-8">{`Total cost: $${totalCost}`}</p>
+          <p className="font-black mt-6 ml-8">{`VAT: $${tax}`}</p>
+          <p className="font-black mt-6 ml-8">{`Final cost: $${finalCost}`}</p>
         </div>
       </div>
     </div>
