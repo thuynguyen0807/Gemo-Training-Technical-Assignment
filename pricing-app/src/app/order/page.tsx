@@ -2,68 +2,18 @@
 import OrderBreakfastItem from "@/app/order/OrderBreakfastItem";
 import OrderCoffeeItem from "@/app/order/OrderCoffeeItem";
 import PlusIcon from "@/components/plusIcon";
-import { BreakFast, DrinkType, Milk, Size, Topping } from "@/types";
-import { BagelTopping, SandwichTopping } from "@/types/enum";
+import {
+  bagelToppings,
+  breakfastItems,
+  drinkTypes,
+  milkOptions,
+  sandwichToppings,
+  sizeOptions,
+  sizeOptionsForHotDrink,
+  toppingOptions,
+} from "@/mock/data";
+import { BreakFast, DrinkType } from "@/types/enum";
 import { FC, useState } from "react";
-
-export interface Options {
-  readonly value: string;
-  readonly label: string;
-  readonly isDisabled?: boolean;
-}
-
-const toppingOptions: Options[] = [
-  { value: "none", label: Topping.None },
-  { value: "whippedCream", label: Topping.WhippedCream },
-];
-
-const sizeOptions: Options[] = [
-  { value: "S", label: Size.S },
-  { value: "M", label: Size.M },
-  { value: "L", label: Size.L },
-  { value: "XL", label: Size.XL },
-];
-
-const sizeOptionsForHotDrink: Options[] = [
-  { value: "S", label: Size.S },
-  { value: "M", label: Size.M }
-];
-
-const drinkTypes = [
-  DrinkType.Hot,
-  DrinkType.Cold,
-  DrinkType.Blended,
-  DrinkType.MilkTea,
-];
-
-const breakfastItems = [BreakFast.Sandwich, BreakFast.Bagel];
-
-const milkOptions = [
-  { value: Milk.None, label: Milk.None },
-  { value: Milk.AlmondMilk, label: Milk.AlmondMilk },
-  { value: Milk.WholeMilk, label: Milk.WholeMilk },
-];
-
-const sandwichToppings = [
-  { value: "egg", label: SandwichTopping.Egg },
-  { value: "turkey", label: SandwichTopping.Turkey },
-  { value: "none", label: SandwichTopping.None },
-];
-
-const bagelToppings = [
-  { value: "butter", label: BagelTopping.Butter },
-  { value: "creamCheese", label: BagelTopping.CreamCheese },
-  { value: "none", label: BagelTopping.None },
-];
-
-export type Coffee = {
-  drinkType: DrinkType;
-  size: string;
-  topping: string;
-  milk: string;
-  chocolateSauce: number;
-  quantity: number;
-};
 
 const Order: FC = () => {
   const [totalCost, setTotalCost] = useState<number>(0);
@@ -90,11 +40,16 @@ const Order: FC = () => {
                 <h2>Coffee</h2>
               </div>
             </div>
+
             {drinkTypes.map((item) => (
               <div className="pl-8 pt-4" key={item}>
                 <OrderCoffeeItem
                   toppingOptions={toppingOptions}
-                  sizeOptions={item !== DrinkType.Hot ? sizeOptions : sizeOptionsForHotDrink}
+                  sizeOptions={
+                    item !== DrinkType.Hot
+                      ? sizeOptions
+                      : sizeOptionsForHotDrink
+                  }
                   onCoffeeItemAdded={handleCoffeeItemAdded}
                   milkOptions={milkOptions}
                   drinkType={item}

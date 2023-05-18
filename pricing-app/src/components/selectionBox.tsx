@@ -1,10 +1,6 @@
+import Options from "@/types";
 import { FC } from "react";
-import {
-  MultiValue,
-  SingleValue,
-} from "react-select";
 import Select from "react-select";
-import { Options } from "@/app/order/page";
 
 type Props = {
     isMulti: boolean;

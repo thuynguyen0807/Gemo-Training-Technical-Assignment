@@ -1,25 +1,8 @@
-import { BreakFast, DrinkType, MenuType, Milk, Size, Topping } from "@/types";
+import { BagelTopping, BreakFast, SandwichTopping } from "@/types/enum";
 import { FC, useState } from "react";
 import SelectionBox from "../../components/selectionBox";
-import { Coffee, Options } from "@/app/order/page";
-
-enum SandwichTopping {
-  Egg = "Egg",
-  Turkey = "Turkey",
-  None = "None",
-}
-
-enum BagelTopping {
-  Butter = "Butter",
-  CreamCheese = "Cream Cheese",
-  None = "None",
-}
-
-export type BreakFastItem = {
-  type: BreakFast;
-  topping: string;
-  quantity: number;
-};
+import Options from "@/types";
+import { BreakFastItem } from "@/types/type";
 
 const defaultBreakfastItem: BreakFastItem = {
   type: BreakFast.Sandwich,

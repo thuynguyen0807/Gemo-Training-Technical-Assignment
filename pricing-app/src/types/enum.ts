@@ -5,16 +5,16 @@ export enum DrinkType {
   MilkTea = "Milk tea",
 }
 
+export enum BreakFast {
+  Sandwich = "Sandwich",
+  Bagel = "Bagel",
+}
+
 export enum Size {
   S = "S",
   M = "M",
   L = "L",
   XL = "XL",
-}
-
-export enum BreakFast {
-  Sandwich = "Sandwich",
-  Bagel = "Bagel",
 }
 
 export enum Milk {

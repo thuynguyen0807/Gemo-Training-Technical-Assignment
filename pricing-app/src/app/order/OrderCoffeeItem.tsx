@@ -1,16 +1,9 @@
-import { BreakFast, DrinkType, Milk, Size, Topping } from "@/types";
+import { BreakFast, DrinkType, Milk, Size, Topping } from "@/types/enum";
 import { FC, useState } from "react";
-import { Coffee, Options } from "@/app/order/page";
 import SelectionBox from "@/components/selectionBox";
-
-const defaultCoffee: Coffee = {
-  drinkType: DrinkType.Hot,
-  size: Size.S,
-  milk: Milk.None,
-  chocolateSauce: 0,
-  quantity: 1,
-  topping: Topping.None,
-};
+import Options from "@/types";
+import { defaultCoffee } from "@/mock/data";
+import { Coffee } from "@/types/type";
 
 type Props = {
   drinkType: DrinkType | BreakFast;
