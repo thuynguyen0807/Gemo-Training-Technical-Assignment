@@ -100,7 +100,26 @@ const OrderCoffeeItem: FC<Props> = ({
     const cost = calculatePrice3(coffee);
     setCost(cost);
     onCoffeeItemAdded(cost);
+    postData("http://localhost:8080/makeOrder", coffee).then((coffee) => {
+      console.log(coffee); // JSON data parsed by `data.json()` call
+    });
   };
+
+  async function postData(url: string, data: any) {
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow", 
+      referrerPolicy: "no-referrer", 
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  }
 
   return (
     <div>

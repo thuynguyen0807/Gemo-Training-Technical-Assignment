@@ -1,6 +1,5 @@
 "use client";
 import OrderBreakfastItem from "@/app/order/OrderBreakfastItem";
-import OrderCoffeeItem from "@/app/order/OrderCoffeeItem";
 import PlusIcon from "@/components/plusIcon";
 import {
   bagelToppings,
@@ -14,6 +13,7 @@ import {
 } from "@/mock/data";
 import { BreakFast, DrinkType } from "@/types/enum";
 import { FC, useState } from "react";
+import OrderCoffeeItem from "./OrderCoffeeItem";
 
 const Order: FC = () => {
   const [totalCost, setTotalCost] = useState<number>(0);

@@ -7,12 +7,13 @@ export interface Options {
 }
 
 export type Coffee = {
-  drinkType: DrinkType;
+  drinkType: string;
   size: string;
   topping: string;
   milk: string;
   chocolateSauce: number;
   quantity: number;
+  cost: number;
 };
 
 export type BreakFastItem = {
