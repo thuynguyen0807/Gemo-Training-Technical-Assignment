@@ -4,6 +4,7 @@ import { connectDB } from "./server";
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 app.get("/getData", (req, res) => {
   res.send("Hello hihihi");
@@ -16,8 +17,9 @@ app.post("/post", (req, res) => {
 });
 
 app.post("/makeOrder", (req, res) => {
-  console.log(req.body);
-  res.send(req.body);
+  const data = req.body;
+  console.log(data);
+  res.send(data);
 })
 
 const port = process.env.PORT || 8080;
