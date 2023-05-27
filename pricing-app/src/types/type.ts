@@ -1,3 +1,4 @@
+import { UUID } from "crypto";
 import { BreakFast, DrinkType } from "./enum";
 
 export interface Options {
@@ -6,18 +7,18 @@ export interface Options {
   readonly isDisabled?: boolean;
 }
 
-export type Coffee = {
-  drinkType: string;
-  size: string;
+export type Item = {
+  type: string;
+  size?: string;
   topping: string;
-  milk: string;
-  chocolateSauce: number;
+  milk?: string;
+  chocolateSauce?: number;
   quantity: number;
   cost: number;
 };
 
-export type BreakFastItem = {
-  type: BreakFast;
-  topping: string;
-  quantity: number;
-};
+export type Order = {
+  cost: number;
+  status: string;
+  items: Item[];
+}

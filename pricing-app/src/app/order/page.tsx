@@ -14,17 +14,49 @@ import {
 import { BreakFast, DrinkType } from "@/types/enum";
 import { FC, useState } from "react";
 import OrderCoffeeItem from "./OrderCoffeeItem";
+import { Item, Order } from "@/types/type";
+import OrderCoffeeItemAdded from "./OrderCoffeeItemAdded";
 
 const Order: FC = () => {
   const [totalCost, setTotalCost] = useState<number>(0);
+  const [items, setItems] = useState<Item[]>([]);
 
-  const handleCoffeeItemAdded = (cost: number) => {
-    setTotalCost(totalCost + cost);
+  const handleCoffeeItemAdded = (coffee: Item) => {
+    setTotalCost(totalCost + 0);
+    setItems([...items, coffee]);
   };
 
-  const handleBreakfastItemAdded = (cost: number) => {
-    setTotalCost(totalCost + cost);
+  const handleBreakfastItemAdded = (breakfast: Item) => {
+    setTotalCost(totalCost + 0);
+    setItems([...items, breakfast]);
   };
+
+  const handleRemoveItem = (id: string) => {};
+
+  const handleOrder = () => {
+    const order: Order = {
+      cost: totalCost,
+      status: "pending",
+      items: items,
+    };
+
+    postData("http://localhost:8080/makeOrder", order).then((coffee) => {
+      console.log(coffee); // JSON data parsed by `data.json()` call
+    });
+
+    setItems([]);
+  };
+
+  async function postData(url: string, data: any) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  }
 
   const tax = totalCost * 0.0725;
   const finalCost = totalCost + tax;
@@ -55,7 +87,7 @@ const Order: FC = () => {
                   }
                   onCoffeeItemAdded={handleCoffeeItemAdded}
                   milkOptions={milkOptions}
-                  drinkType={item}
+                  type={item}
                 />
               </div>
             ))}
@@ -83,10 +115,44 @@ const Order: FC = () => {
               </div>
             ))}
           </div>
+          {/* Cart */}
+          <p className="font-black mt-6 ml-8 text-xl">Cart</p>
+          <div className="pl-8 pt-4">
+            {items.length > 0 ? (
+              items.map((item, index) => (
+                <OrderCoffeeItemAdded
+                  type={item.type}
+                  topping={item.topping}
+                  size={item.size ?? "S"}
+                  milk={item.milk ?? "None"}
+                  chocolateSauce={item.chocolateSauce ?? 0}
+                  quantity={item.quantity}
+                  cost={item.cost}
+                  onRemoveItem={handleRemoveItem}
+                  key={index}
+                />
+              ))
+            ) : (
+              <div className="mb-4 flex justify-center">
+                <p>No items has been added</p>
+                <hr />
+              </div>
+            )}
+          </div>
           {/* Cost */}
-          <p className="font-black mt-6 ml-8">{`Total cost: $${totalCost}`}</p>
-          <p className="font-black mt-6 ml-8">{`VAT: $${tax}`}</p>
-          <p className="font-black mt-6 ml-8">{`Final cost: $${finalCost}`}</p>
+
+          <p className="ml-8">{`Total cost: $${totalCost}`}</p>
+          <p className="ml-8">{`Tax: $${tax}`}</p>
+          <p className="ml-8">{`Final cost: $${finalCost}`}</p>
+          <div className=" flex justify-end">
+            <button
+              className="bg-gray-700 w-14 h-8 rounded text-white mr-8"
+              onClick={handleOrder}
+            >
+              Order
+            </button>
+          </div>
+          {/* Order */}
         </div>
       </div>
     </div>

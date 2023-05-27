@@ -2,18 +2,19 @@ import { BagelTopping, BreakFast, SandwichTopping } from "@/types/enum";
 import { FC, useState } from "react";
 import SelectionBox from "../../components/selectionBox";
 import Options from "@/types";
-import { BreakFastItem } from "@/types/type";
+import { Item } from "@/types/type";
 
-const defaultBreakfastItem: BreakFastItem = {
+const defaultBreakfastItem: Item = {
   type: BreakFast.Sandwich,
   topping: SandwichTopping.None,
   quantity: 1,
+  cost: 0,
 };
 
 type Props = {
   type: BreakFast;
   toppingOptions: Options[];
-  onBreakfastItemAdded: (cost: number) => void;
+  onBreakfastItemAdded: (breakfast: Item) => void;
 };
 
 const OrderBreakfastItem: FC<Props> = ({
@@ -21,7 +22,7 @@ const OrderBreakfastItem: FC<Props> = ({
   toppingOptions,
   onBreakfastItemAdded,
 }: Props) => {
-  const [breakfastItem, setBreakfastItem] = useState<BreakFastItem>(defaultBreakfastItem);
+  const [breakfastItem, setBreakfastItem] = useState<Item>(defaultBreakfastItem);
   const calculateCost = (): number => {
     let costOfBreakfast = 0;
 
@@ -55,7 +56,7 @@ const OrderBreakfastItem: FC<Props> = ({
   const handleBreakfastItemAdded = () => {
     const cost = calculateCost();
     setCost(cost);
-    onBreakfastItemAdded(cost);
+    onBreakfastItemAdded(breakfastItem);
   };
 
   return (

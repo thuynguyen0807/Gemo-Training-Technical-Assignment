@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./server";
+import { connectDB, insertIntoDb } from "./server";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.get("/getData", (req, res) => {
-  res.send("Hello hihihi");
+  res.send("Hello world");
 })
 
 app.post("/post", (req, res) => {
@@ -19,7 +19,8 @@ app.post("/post", (req, res) => {
 app.post("/makeOrder", (req, res) => {
   const data = req.body;
   console.log(data);
-  res.send(data);
+  // res.send(data);
+  insertIntoDb("orders", data);
 })
 
 const port = process.env.PORT || 8080;

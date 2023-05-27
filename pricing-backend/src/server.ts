@@ -4,6 +4,12 @@ const connectionString =
   "mongodb+srv://thuynguyen:131123Na@cluster0.wnuov.mongodb.net/";
 
 export const client = new MongoClient(connectionString);
+
+export const insertIntoDb = async (collection: string, document: any) => {
+  const result = await client.db("pricing").collection(collection).insertOne(document);
+  console.log(`New ${collection} created sucessfully with id`, result.insertedId);
+};
+
 export const connectDB = async () => {
   try {
     await client.connect();

@@ -1,4 +1,5 @@
 import Options from "@/types";
+import { v4 as uuid } from 'uuid';
 import {
   Topping,
   Size,
@@ -8,7 +9,8 @@ import {
   SandwichTopping,
   BagelTopping,
 } from "@/types/enum";
-import { BreakFastItem, Coffee } from "@/types/type";
+import { Item } from "@/types/type";
+import { randomUUID } from "crypto";
 
 export const toppingOptions: Options[] = [
   { value: "none", label: Topping.None },
@@ -54,18 +56,20 @@ export const bagelToppings = [
   { value: "none", label: BagelTopping.None },
 ];
 
-export const defaultBreakfastItem: BreakFastItem = {
+export const defaultBreakfastItem: Item = {
     type: BreakFast.Sandwich,
     topping: SandwichTopping.None,
     quantity: 1,
+    cost: 0
   };
   
 
-  export const defaultCoffee: Coffee = {
-    drinkType: DrinkType.Hot,
+  export const defaultCoffee: Item = {
+    type: DrinkType.Hot,
     size: Size.S,
     milk: Milk.None,
     chocolateSauce: 0,
     quantity: 1,
     topping: Topping.None,
+    cost: 0
   };

@@ -3,26 +3,27 @@ import { FC, useState } from "react";
 import SelectionBox from "@/components/selectionBox";
 import Options from "@/types";
 import { defaultCoffee } from "@/mock/data";
-import { Coffee } from "@/types/type";
+import { Item } from "@/types/type";
+import { v4 as uuid } from 'uuid';
 
 type Props = {
-  drinkType: DrinkType | BreakFast;
+  type: DrinkType | BreakFast;
   toppingOptions: Options[];
   sizeOptions: Options[];
   milkOptions: Options[];
-  onCoffeeItemAdded: (cost: number) => void;
+  onCoffeeItemAdded: (coffee: Item) => void;
 };
 
 const OrderCoffeeItem: FC<Props> = ({
-  drinkType,
+  type,
   toppingOptions,
   sizeOptions,
   milkOptions,
   onCoffeeItemAdded,
 }: Props) => {
-  const calculatePrice3 = (coffee: Coffee): number => {
+  const calculatePrice3 = (coffee: Item): number => {
     let cost = 0;
-    switch (coffee.drinkType) {
+    switch (coffee.type) {
       case DrinkType.Hot:
       case DrinkType.Cold:
         cost += 2;
@@ -38,7 +39,7 @@ const OrderCoffeeItem: FC<Props> = ({
         cost += 0.5;
         break;
       case Size.L:
-        if (drinkType === DrinkType.Hot) {
+        if (type === DrinkType.Hot) {
           console.log("Hot drink does not include L");
           return cost;
         }
@@ -57,7 +58,7 @@ const OrderCoffeeItem: FC<Props> = ({
     }
 
     if (coffee.chocolateSauce) {
-      if (drinkType === DrinkType.Hot && coffee.chocolateSauce <= 6) {
+      if (type === DrinkType.Hot && coffee.chocolateSauce <= 6) {
         const costedChocolateSauce = coffee.chocolateSauce - 2;
         cost += costedChocolateSauce > 1 ? costedChocolateSauce * 0.5 : 0;
       } else {
@@ -68,7 +69,7 @@ const OrderCoffeeItem: FC<Props> = ({
     return cost * coffee.quantity;
   };
 
-  const [coffee, setCoffee] = useState<Coffee>(defaultCoffee);
+  const [coffee, setCoffee] = useState<Item>(defaultCoffee);
   const [cost, setCost] = useState<number>(calculatePrice3(defaultCoffee));
   const [error, setError] = useState<boolean>(false);
   const handleToppingChanged = (value: Options) => {
@@ -99,28 +100,14 @@ const OrderCoffeeItem: FC<Props> = ({
   const handleCoffeeItemAdded = () => {
     const cost = calculatePrice3(coffee);
     setCost(cost);
-    onCoffeeItemAdded(cost);
-    postData("http://localhost:8080/makeOrder", coffee).then((coffee) => {
-      console.log(coffee); // JSON data parsed by `data.json()` call
-    });
+    onCoffeeItemAdded(coffee);
   };
-
-  async function postData(url: string, data: any) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    return response.json();
-  }
 
   return (
     <div>
       <div className="flex w-full justify-between">
         <div className="min-w-[100px]">
-          <p>{drinkType}</p>
+          <p>{type}</p>
         </div>
         <div className="">
           <SelectionBox
@@ -150,7 +137,7 @@ const OrderCoffeeItem: FC<Props> = ({
           className="border rounded max-w-[100px]"
           placeholder="Enter pump of chocolate sauce"
           defaultValue={0}
-          disabled={drinkType !== DrinkType.Hot}
+          disabled={type !== DrinkType.Hot}
           onChange={(e) => handlePumpOfChocolateChanged(Number(e.target.value))}
         />
         <input
