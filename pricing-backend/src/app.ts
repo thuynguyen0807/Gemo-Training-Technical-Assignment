@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { connectDB, insertIntoDb } from "./server";
+import { connectDB, getAll, insertIntoDb, updateOne } from "./server";
+import { ObjectId } from "mongodb";
 
 const app = express();
 app.use(cors());
@@ -21,6 +22,20 @@ app.post("/makeOrder", (req, res) => {
   console.log(data);
   // res.send(data);
   insertIntoDb("orders", data);
+})
+
+app.get("/getOrders", async (req, res) => {
+  const result = await getAll("orders");
+  res.send(result);
+  return result;
+})
+
+app.patch("/order/:id", async (req, res) => {
+  console.log('body', req.body);
+  const result = await updateOne("orders", req.params.id as unknown as ObjectId, req.body.status);
+  console.log("result 1", result);
+  res.send(result);
+  return result;
 })
 
 const port = process.env.PORT || 8080;

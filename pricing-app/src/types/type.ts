@@ -18,7 +18,11 @@ export type Item = {
 };
 
 export type Order = {
+  _id?: string;
   cost: number;
   status: string;
   items: Item[];
+  createdAt: Date;
+  updatedAt: Date;
 }
+

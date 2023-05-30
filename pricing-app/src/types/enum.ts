@@ -39,3 +39,9 @@ export enum BagelTopping {
   CreamCheese = "Cream Cheese",
   None = "None",
 }
+
+export enum OrderStatus {
+  Pending = "Pending",
+  InProgress = "In progress",
+  Completed = "Completed"
+}

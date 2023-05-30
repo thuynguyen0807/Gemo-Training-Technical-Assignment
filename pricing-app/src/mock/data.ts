@@ -1,5 +1,5 @@
 import Options from "@/types";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 import {
   Topping,
   Size,
@@ -8,6 +8,7 @@ import {
   Milk,
   SandwichTopping,
   BagelTopping,
+  OrderStatus,
 } from "@/types/enum";
 import { Item } from "@/types/type";
 import { randomUUID } from "crypto";
@@ -57,19 +58,24 @@ export const bagelToppings = [
 ];
 
 export const defaultBreakfastItem: Item = {
-    type: BreakFast.Sandwich,
-    topping: SandwichTopping.None,
-    quantity: 1,
-    cost: 0
-  };
-  
+  type: BreakFast.Sandwich,
+  topping: SandwichTopping.None,
+  quantity: 1,
+  cost: 0,
+};
 
-  export const defaultCoffee: Item = {
-    type: DrinkType.Hot,
-    size: Size.S,
-    milk: Milk.None,
-    chocolateSauce: 0,
-    quantity: 1,
-    topping: Topping.None,
-    cost: 0
-  };
+export const defaultCoffee: Item = {
+  type: DrinkType.Hot,
+  size: Size.S,
+  milk: Milk.None,
+  chocolateSauce: 0,
+  quantity: 1,
+  topping: Topping.None,
+  cost: 0,
+};
+
+export const orderStatus = [
+  { value: "pending", label: OrderStatus.Pending },
+  { value: "inprogress", label: OrderStatus.InProgress },
+  { value: "completed", label: OrderStatus.Completed },
+];

@@ -2,7 +2,9 @@ export type Order = {
     id: string;
     cost: number;
     status: string;
-    items: Item[] 
+    items: Item[];
+    createdAt: string;
+    UpdatedAt: string;
     
 }
 

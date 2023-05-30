@@ -40,7 +40,6 @@ const OrderCoffeeItem: FC<Props> = ({
         break;
       case Size.L:
         if (type === DrinkType.Hot) {
-          console.log("Hot drink does not include L");
           return cost;
         }
         cost += 1;

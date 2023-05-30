@@ -16,6 +16,7 @@ import { FC, useState } from "react";
 import OrderCoffeeItem from "./OrderCoffeeItem";
 import { Item, Order } from "@/types/type";
 import OrderCoffeeItemAdded from "./OrderCoffeeItemAdded";
+import { postData } from "../utils";
 
 const Order: FC = () => {
   const [totalCost, setTotalCost] = useState<number>(0);
@@ -38,25 +39,16 @@ const Order: FC = () => {
       cost: totalCost,
       status: "pending",
       items: items,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
-    postData("http://localhost:8080/makeOrder", order).then((coffee) => {
-      console.log(coffee); // JSON data parsed by `data.json()` call
+    postData("http://localhost:8080/makeOrder", order).then((data) => {
+      console.log(data); // JSON data parsed by `data.json()` call
     });
 
     setItems([]);
   };
-
-  async function postData(url: string, data: any) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    return response.json();
-  }
 
   const tax = totalCost * 0.0725;
   const finalCost = totalCost + tax;
