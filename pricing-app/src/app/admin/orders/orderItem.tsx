@@ -9,17 +9,17 @@ type Props = {
   updatedAt: string;
   cost: number;
   status: string;
-  onHandleUpdateOrder: (id: string) => void;
+  onOrderUpdated: (id: string) => void;
   onChangeStatusOrder: (value: Options) => void;
 };
 
-const OrderItem: FC<Props> = ({
+const OrderItemView: FC<Props> = ({
   id,
   createdAt,
   updatedAt,
   cost,
   status,
-  onHandleUpdateOrder,
+  onOrderUpdated,
   onChangeStatusOrder,
 }: Props) => {
   return (
@@ -36,7 +36,7 @@ const OrderItem: FC<Props> = ({
         />
         <button
           className="bg-gray-700 w-20 h-8 rounded text-white"
-          onClick={() => onHandleUpdateOrder(id)}
+          onClick={() => onOrderUpdated(id)}
         >
           Update
         </button>
@@ -46,4 +46,4 @@ const OrderItem: FC<Props> = ({
   );
 };
 
-export default OrderItem;
+export default OrderItemView;

@@ -1,6 +1,5 @@
-pricing-backend/node_modules
+node_modules
 pricing-backend/dist
-pricing-app/node_modules
 pricing-app/.next
 pricing-app/build
 pricing-app/dist

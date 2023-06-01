@@ -1,7 +1,7 @@
 "use client";
 import { updateData } from "@/app/utils";
 import { FC, useEffect, useRef, useState } from "react";
-import OrderItem from "./orderItem";
+import OrderItemView from "./orderItem";
 import { Options, Order } from "@/types/type";
 import moment from "moment";
 
@@ -39,13 +39,13 @@ const OrderPage: FC = () => {
         </div>
         <div className="p-8">
           {items.map((item) => (
-            <OrderItem
+            <OrderItemView
               id={item._id ?? ""}
               createdAt={moment(item.createdAt).format("DD MMM YYYY")}
               updatedAt={moment(item.updatedAt).format("DD MMM YYYY")}
               cost={item.cost}
               status={item.status}
-              onHandleUpdateOrder={handleUpdatedOrder}
+              onOrderUpdated={handleUpdatedOrder}
               onChangeStatusOrder={handleChangeStatusOrder}
               key={item._id}
             />

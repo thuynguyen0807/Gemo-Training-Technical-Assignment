@@ -1,9 +1,10 @@
-import { BreakFast, DrinkType, Milk, Size, Topping } from "@/types/enum";
+import { BreakFast, DrinkType} from "@/types/enum";
 import { FC, useState } from "react";
 import SelectionBox from "@/components/selectionBox";
 import Options from "@/types";
 import { defaultCoffee } from "@/mock/data";
 import { Item } from "@/types/type";
+import { calculatePrice3 } from "../utils/handlingCost";
 
 type Props = {
   type: DrinkType | BreakFast;
@@ -20,55 +21,10 @@ const OrderCoffeeItem: FC<Props> = ({
   milkOptions,
   onCoffeeItemAdded,
 }: Props) => {
-  const calculatePrice3 = (coffee: Item): number => {
-    let cost = 0;
-    switch (coffee.type) {
-      case DrinkType.Hot:
-      case DrinkType.Cold:
-        cost += 2;
-        break;
-      case DrinkType.Blended:
-        cost += 3;
-      default:
-        break;
-    }
-
-    switch (coffee.size) {
-      case Size.M:
-        cost += 0.5;
-        break;
-      case Size.L:
-        if (type === DrinkType.Hot) {
-          return cost;
-        }
-        cost += 1;
-        break;
-      default:
-        break;
-    }
-
-    if (coffee.topping === Topping.WhippedCream) {
-      cost += 0.5;
-    }
-
-    if (coffee.milk === Milk.AlmondMilk) {
-      cost += 1.5;
-    }
-
-    if (coffee.chocolateSauce) {
-      if (type === DrinkType.Hot && coffee.chocolateSauce <= 6) {
-        const costedChocolateSauce = coffee.chocolateSauce - 2;
-        cost += costedChocolateSauce > 1 ? costedChocolateSauce * 0.5 : 0;
-      } else {
-        return cost;
-      }
-    }
-
-    return cost * coffee.quantity;
-  };
+  
 
   const [coffee, setCoffee] = useState<Item>(defaultCoffee);
-  const [cost, setCost] = useState<number>(calculatePrice3(defaultCoffee));
+  const [cost, setCost] = useState<number>(calculatePrice3(type, defaultCoffee));
   const [error, setError] = useState<boolean>(false);
   const handleToppingChanged = (value: Options) => {
     setCoffee({ ...coffee, topping: value.value });
@@ -96,7 +52,7 @@ const OrderCoffeeItem: FC<Props> = ({
   };
 
   const handleCoffeeItemAdded = () => {
-    const cost = calculatePrice3(coffee);
+    const cost = calculatePrice3(type, coffee);
     setCost(cost);
     onCoffeeItemAdded({...coffee, cost: cost});
   };

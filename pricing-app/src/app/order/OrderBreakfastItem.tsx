@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import SelectionBox from "../../components/selectionBox";
 import Options from "@/types";
 import { Item } from "@/types/type";
+import { calculateCost } from "../utils/handlingCost";
 
 const defaultBreakfastItem: Item = {
   type: BreakFast.Sandwich,
@@ -23,28 +24,7 @@ const OrderBreakfastItem: FC<Props> = ({
   onBreakfastItemAdded,
 }: Props) => {
   const [breakfastItem, setBreakfastItem] = useState<Item>(defaultBreakfastItem);
-  const calculateCost = (): number => {
-    let costOfBreakfast = 0;
-
-    switch (type) {
-      case BreakFast.Sandwich:
-        if (breakfastItem.topping !== SandwichTopping.None) {
-          costOfBreakfast += 4;
-        } else {
-          costOfBreakfast += 3;
-        }
-        break;
-      default:
-        if (breakfastItem.topping !== BagelTopping.None) {
-          costOfBreakfast += 3.5;
-        } else {
-          costOfBreakfast += 3;
-        }
-    }
-
-    return costOfBreakfast * breakfastItem.quantity;
-  };
-  const [cost, setCost] = useState<number>(calculateCost());
+  const [cost, setCost] = useState<number>(calculateCost(type, breakfastItem));
   const handleToppingChanged = (value: Options) => {
     setBreakfastItem({ ...breakfastItem, topping: value.value });
   };
@@ -54,7 +34,7 @@ const OrderBreakfastItem: FC<Props> = ({
   };
 
   const handleBreakfastItemAdded = () => {
-    const cost = calculateCost();
+    const cost = calculateCost(type, breakfastItem);
     setCost(cost);
     onBreakfastItemAdded({...breakfastItem, cost: cost});
   };
