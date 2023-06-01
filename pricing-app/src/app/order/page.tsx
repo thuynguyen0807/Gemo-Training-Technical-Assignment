@@ -23,12 +23,12 @@ const Order: FC = () => {
   const [items, setItems] = useState<Item[]>([]);
 
   const handleCoffeeItemAdded = (coffee: Item) => {
-    setTotalCost(totalCost + 0);
+    setTotalCost(totalCost + coffee.cost);
     setItems([...items, coffee]);
   };
 
   const handleBreakfastItemAdded = (breakfast: Item) => {
-    setTotalCost(totalCost + 0);
+    setTotalCost(totalCost + breakfast.cost);
     setItems([...items, breakfast]);
   };
 

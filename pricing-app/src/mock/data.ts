@@ -11,7 +11,6 @@ import {
   OrderStatus,
 } from "@/types/enum";
 import { Item } from "@/types/type";
-import { randomUUID } from "crypto";
 
 export const toppingOptions: Options[] = [
   { value: "none", label: Topping.None },

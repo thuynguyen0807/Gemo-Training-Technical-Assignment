@@ -56,7 +56,7 @@ const OrderBreakfastItem: FC<Props> = ({
   const handleBreakfastItemAdded = () => {
     const cost = calculateCost();
     setCost(cost);
-    onBreakfastItemAdded(breakfastItem);
+    onBreakfastItemAdded({...breakfastItem, cost: cost});
   };
 
   return (

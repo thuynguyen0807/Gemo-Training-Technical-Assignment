@@ -4,7 +4,6 @@ import SelectionBox from "@/components/selectionBox";
 import Options from "@/types";
 import { defaultCoffee } from "@/mock/data";
 import { Item } from "@/types/type";
-import { v4 as uuid } from 'uuid';
 
 type Props = {
   type: DrinkType | BreakFast;
@@ -99,7 +98,7 @@ const OrderCoffeeItem: FC<Props> = ({
   const handleCoffeeItemAdded = () => {
     const cost = calculatePrice3(coffee);
     setCost(cost);
-    onCoffeeItemAdded(coffee);
+    onCoffeeItemAdded({...coffee, cost: cost});
   };
 
   return (
