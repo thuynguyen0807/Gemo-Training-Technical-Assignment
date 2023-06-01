@@ -1,0 +1,6 @@
+node_modules
+pricing-backend/dist
+pricing-app/.next
+pricing-app/build
+pricing-app/dist
+.DS_Store
