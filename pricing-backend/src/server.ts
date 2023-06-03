@@ -20,15 +20,16 @@ export const getAll = async (collectionName: string) => {
 
 export const updateOne = async (
   collectionName: string,
-  id: ObjectId,
+  id: string,
   newStatus: string
 ) => {
+  console.log(collectionName, id, newStatus)
   const updatedItem = await client
     .db("pricing")
     .collection(collectionName)
-    .findOneAndUpdate({ _id: id }, { $set: { status: newStatus } });
+    .findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { status: newStatus } }, { returnDocument: 'after' });
   console.log("updated item", updatedItem);
-  return updatedItem;
+  return updatedItem.value;
 };
 
 export const connectDB = async () => {

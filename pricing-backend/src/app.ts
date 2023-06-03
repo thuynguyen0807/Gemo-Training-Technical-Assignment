@@ -31,7 +31,7 @@ app.get("/getOrders", async (req, res) => {
 })
 
 app.patch("/order/:id", async (req, res) => {
-  const result = await updateOne("orders", req.params.id as unknown as ObjectId, req.body.status);
+  const result = await updateOne("orders", req.params.id, req.body.status);
   console.log("res", result);
   res.send(result);
   return result;
