@@ -9,7 +9,7 @@ const OrderPage: FC = () => {
   const [items, setItems] = useState<Order[]>([]);
   const newStatus = useRef<string>();
   const getOrders = async () => {
-    const res = await fetch("http://localhost:8080/getOrders");
+    const res = await fetch("https://gemo-training-technical-assignment-p8kdqm65x-thuynguyen0807.vercel.app/getOrders");
     const data = await res.json();
     setItems(data);
     return data;
@@ -20,7 +20,7 @@ const OrderPage: FC = () => {
   }
 
   const handleUpdatedOrder = async (id: string) => {
-    const newItem = await updateData(`http://localhost:8080/order/${id}`, {status: newStatus.current});
+    const newItem = await updateData(`https://gemo-training-technical-assignment-p8kdqm65x-thuynguyen0807.vercel.app/order/${id}`, {status: newStatus.current});
     console.log("newItem", newItem);
   };
 

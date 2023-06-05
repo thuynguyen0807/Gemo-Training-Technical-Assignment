@@ -43,7 +43,7 @@ const Order: FC = () => {
       updatedAt: new Date(),
     };
 
-    postData("http://localhost:8080/makeOrder", order).then((data) => {
+    postData("https://gemo-training-technical-assignment-p8kdqm65x-thuynguyen0807.vercel.app/makeOrder", order).then((data) => {
       console.log(data); // JSON data parsed by `data.json()` call
     });
 

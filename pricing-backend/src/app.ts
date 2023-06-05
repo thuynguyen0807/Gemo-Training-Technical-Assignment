@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import { connectDB, getAll, insertIntoDb, updateOne } from "./server";
-import { ObjectId } from "mongodb";
 
 const app = express();
 app.use(cors());
