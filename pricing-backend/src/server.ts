@@ -1,9 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-const connectionString =
-  "mongodb+srv://thuynguyen:131123Na@cluster0.wnuov.mongodb.net/";
-
-export const client = new MongoClient(connectionString);
+export const client = new MongoClient(process.env.MONGO_URI);
 
 export const insertIntoDb = async (collectionName: string, document: any) => {
   await client.db("pricing").collection(collectionName).insertOne(document);
