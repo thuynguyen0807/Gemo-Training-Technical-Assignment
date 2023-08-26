@@ -57,6 +57,7 @@ export const bagelToppings = [
 ];
 
 export const defaultBreakfastItem: Item = {
+  id: uuid(),
   type: BreakFast.Sandwich,
   topping: SandwichTopping.None,
   quantity: 1,
@@ -64,6 +65,7 @@ export const defaultBreakfastItem: Item = {
 };
 
 export const defaultCoffee: Item = {
+  id: uuid(),
   type: DrinkType.Hot,
   size: Size.S,
   milk: Milk.None,
@@ -77,4 +79,11 @@ export const orderStatus = [
   { value: "pending", label: OrderStatus.Pending },
   { value: "inprogress", label: OrderStatus.InProgress },
   { value: "completed", label: OrderStatus.Completed },
+];
+
+export const themeColorOptions: Options[] = [
+  { value: 'dark', label: 'Dark' },
+  { value: "light", label: 'Light' },
+  { value: "blue", label: 'Blue' },
+  { value: "pink", label: 'Pink' },
 ];

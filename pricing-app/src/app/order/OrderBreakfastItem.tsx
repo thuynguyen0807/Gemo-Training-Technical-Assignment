@@ -1,11 +1,13 @@
-import { BagelTopping, BreakFast, SandwichTopping } from "@/types/enum";
+import { BreakFast, SandwichTopping } from "@/types/enum";
 import { FC, useState } from "react";
 import SelectionBox from "../../components/selectionBox";
 import Options from "@/types";
 import { Item } from "@/types/type";
 import { calculateCost } from "../utils/handlingCost";
+import { v4 as uuidv4 } from "uuid";
 
 const defaultBreakfastItem: Item = {
+  id: uuidv4(),
   type: BreakFast.Sandwich,
   topping: SandwichTopping.None,
   quantity: 1,
@@ -23,7 +25,8 @@ const OrderBreakfastItem: FC<Props> = ({
   toppingOptions,
   onBreakfastItemAdded,
 }: Props) => {
-  const [breakfastItem, setBreakfastItem] = useState<Item>(defaultBreakfastItem);
+  const [breakfastItem, setBreakfastItem] =
+    useState<Item>(defaultBreakfastItem);
   const [cost, setCost] = useState<number>(calculateCost(type, breakfastItem));
   const handleToppingChanged = (value: Options) => {
     setBreakfastItem({ ...breakfastItem, topping: value.value });
@@ -36,7 +39,7 @@ const OrderBreakfastItem: FC<Props> = ({
   const handleBreakfastItemAdded = () => {
     const cost = calculateCost(type, breakfastItem);
     setCost(cost);
-    onBreakfastItemAdded({...breakfastItem, cost: cost});
+    onBreakfastItemAdded({ ...breakfastItem, id: uuidv4(), cost: cost });
   };
 
   return (
@@ -56,14 +59,14 @@ const OrderBreakfastItem: FC<Props> = ({
         <input
           type="number"
           min="1"
-          className="border rounded max-w-[100px]"
+          className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
           placeholder="Enter quantity"
           defaultValue={1}
           onChange={(e) => handleQuantityChanged(Number(e.target.value))}
         />
         <p>{`$${cost}`}</p>
         <button
-          className="bg-gray-700 w-12 rounded text-white"
+          className="bg-buttonBgColor w-12 rounded text-buttonColor"
           onClick={handleBreakfastItemAdded}
         >
           Add

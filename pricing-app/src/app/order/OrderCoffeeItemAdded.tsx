@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 type Props = {
+  id: string;
   type: string;
   topping: string;
   size: string;
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const OrderCoffeeItemAdded: FC<Props> = ({
+  id,
   type,
   topping,
   size,
@@ -19,7 +21,7 @@ const OrderCoffeeItemAdded: FC<Props> = ({
   chocolateSauce,
   quantity,
   cost,
-  onRemoveItem
+  onRemoveItem,
 }: Props) => {
   return (
     <div className="mb-4">
@@ -34,8 +36,8 @@ const OrderCoffeeItemAdded: FC<Props> = ({
         <div className="">{quantity}</div>
         <div className="">{`$${cost}`}</div>
         <button
-          className="bg-gray-700 w-20 h-8 rounded text-white"
-          // onClick={() => onRemoveItem(id)}
+          className="bg-buttonBgColor w-12 rounded text-buttonColor"
+          onClick={() => onRemoveItem(id)}
         >
           Remove
         </button>
