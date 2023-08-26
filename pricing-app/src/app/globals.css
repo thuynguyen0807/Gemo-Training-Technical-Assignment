@@ -6,7 +6,63 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary: rgba(12, 11, 11, 0.911);
+  --text: rgba(12, 11, 11, 0.911);
+  --primary-foreground: 210 40% 98%;
+  --background:white;
+  --buttonColor: white;
+  --buttonBgColor: rgba(12, 11, 11, 0.911);
+  --buttonIconColor: white;
 }
+.dark{
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary: rgba(12, 11, 11, 0.911);
+  --primary-foreground: 210 40% 98%;
+  --background:rgba(12, 11, 11, 0.911);
+  --text: white;
+  --buttonColor: rgba(12, 11, 11, 0.911);
+  --buttonBgColor: white;
+  --buttonIconColor: rgba(12, 11, 11, 0.911);
+}
+.blue{
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary: #0c50ee;
+  --background:#0c50ee;
+  --text: white;
+  --primary-foreground: 210 40% 98%;
+  --buttonColor: rgba(12, 11, 11, 0.911);
+  --buttonBgColor: white;
+  --buttonIconColor: #0c50ee;
+}
+.pink{
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary: rgb(245, 140, 182);
+  --background:rgb(245, 140, 182);
+  --text: white;
+  --primary-foreground: 210 40% 98%;
+  --buttonColor: rgba(12, 11, 11, 0.911);
+  --buttonBgColor: white;
+  --buttonIconColor: rgb(245, 140, 182);
+}
+.green{
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary: rgb(245, 140, 182);
+  --background:rgb(245, 140, 182);
+  --text: white;
+  --primary-foreground: 210 40% 98%;
+  --buttonColor: rgba(12, 11, 11, 0.911);
+  --buttonBgColor: white;
+  --buttonIconColor: rgb(245, 140, 182);
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -25,3 +81,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* @layer base{
+  body {
+      @apply dark:bg-gray-800 bg-white
+  }
+} */
+

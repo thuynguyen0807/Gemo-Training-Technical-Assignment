@@ -1,4 +1,4 @@
-import { BreakFast, DrinkType} from "@/types/enum";
+import { BreakFast, DrinkType } from "@/types/enum";
 import { FC, useState } from "react";
 import SelectionBox from "@/components/selectionBox";
 import Options from "@/types";
@@ -21,10 +21,10 @@ const OrderCoffeeItem: FC<Props> = ({
   milkOptions,
   onCoffeeItemAdded,
 }: Props) => {
-  
-
   const [coffee, setCoffee] = useState<Item>(defaultCoffee);
-  const [cost, setCost] = useState<number>(calculatePrice3(type, defaultCoffee));
+  const [cost, setCost] = useState<number>(
+    calculatePrice3(type, defaultCoffee)
+  );
   const [error, setError] = useState<boolean>(false);
   const handleToppingChanged = (value: Options) => {
     setCoffee({ ...coffee, topping: value.value });
@@ -54,7 +54,7 @@ const OrderCoffeeItem: FC<Props> = ({
   const handleCoffeeItemAdded = () => {
     const cost = calculatePrice3(type, coffee);
     setCost(cost);
-    onCoffeeItemAdded({...coffee, cost: cost});
+    onCoffeeItemAdded({ ...coffee, cost: cost });
   };
 
   return (
@@ -88,7 +88,7 @@ const OrderCoffeeItem: FC<Props> = ({
           type="number"
           min="1"
           max="6"
-          className="border rounded max-w-[100px]"
+          className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
           placeholder="Enter pump of chocolate sauce"
           defaultValue={0}
           disabled={type !== DrinkType.Hot}
@@ -98,13 +98,13 @@ const OrderCoffeeItem: FC<Props> = ({
           type="number"
           min="1"
           defaultValue={1}
-          className="border rounded max-w-[100px]"
+          className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
           placeholder="Enter quantity"
           onChange={(e) => handleQuantityChanged(Number(e.target.value))}
         />
         <p>{`$${cost}`}</p>
         <button
-          className="bg-gray-700 w-12 rounded text-white"
+          className="bg-buttonBgColor w-12 rounded text-buttonColor"
           onClick={handleCoffeeItemAdded}
         >
           Add

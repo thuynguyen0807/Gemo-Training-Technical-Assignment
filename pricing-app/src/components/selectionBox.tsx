@@ -1,14 +1,16 @@
 import Options from "@/types";
 import { FC } from "react";
-import Select from "react-select";
+import Select, { PropsValue } from "react-select";
+import StateManagedSelect from "react-select/dist/declarations/src/stateManager";
 
-type Props = {
-    isMulti: boolean;
-    options: Options[];
-    onChange: (values: any) => void;
-};
+interface Props {
+  isMulti: boolean;
+  options: Options[];
+  onChange: (values: any) => void;
+  value?: any;
+}
 
-const SelectionBox: FC<Props> = ({isMulti, options, onChange}) => {
+const SelectionBox: FC<Props> = ({ isMulti, options, onChange, value }) => {
   return (
     <Select
       isMulti={isMulti}
@@ -17,8 +19,8 @@ const SelectionBox: FC<Props> = ({isMulti, options, onChange}) => {
       defaultValue={options[0]}
       options={options}
       onChange={onChange}
+      value={value}
     />
-
   );
 };
 

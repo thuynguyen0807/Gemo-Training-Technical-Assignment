@@ -8,6 +8,7 @@ export interface Options {
 }
 
 export type Item = {
+  id: string;
   type: string;
   size?: string;
   topping: string;
