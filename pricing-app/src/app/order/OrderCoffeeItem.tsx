@@ -59,56 +59,62 @@ const OrderCoffeeItem: FC<Props> = ({
 
   return (
     <div>
-      <div className="flex w-full justify-between">
-        <div className="min-w-[100px]">
+      <div className="flex w-full justify-between flex-row">
+        <div className="min-w-[80px] flex items-center pb-4">
           <p>{type}</p>
         </div>
-        <div className="">
-          <SelectionBox
-            isMulti={false}
-            options={sizeOptions}
-            onChange={handleSizeChanged}
-          />
+        <div className="flex flex-col md:flex-row flex-1 pb-4">
+          <div className="flex flex-row flex-1 justify-between">
+            <div className="ha-">
+              <SelectionBox
+                isMulti={false}
+                options={sizeOptions}
+                onChange={handleSizeChanged}
+              />
+            </div>
+            <div className="">
+              <SelectionBox
+                isMulti={false}
+                options={toppingOptions}
+                onChange={handleToppingChanged}
+              />
+            </div>
+            <div className="">
+              <SelectionBox
+                isMulti={false}
+                options={milkOptions ?? []}
+                onChange={handleMilkChanged}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row flex-1 justify-between mt-3 md:mt-0 md:ml-4">
+            <input
+              type="number"
+              min="1"
+              max="6"
+              className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
+              placeholder="Enter pump of chocolate sauce"
+              defaultValue={0}
+              disabled={type !== DrinkType.Hot}
+              onChange={(e) => handlePumpOfChocolateChanged(Number(e.target.value))}
+            />
+            <input
+              type="number"
+              min="1"
+              defaultValue={1}
+              className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
+              placeholder="Enter quantity"
+              onChange={(e) => handleQuantityChanged(Number(e.target.value))}
+            />
+            <p>{`$${cost}`}</p>
+            <button
+              className="bg-buttonBgColor w-12 rounded text-buttonColor"
+              onClick={handleCoffeeItemAdded}
+            >
+              Add
+            </button>
+          </div>
         </div>
-        <div className="">
-          <SelectionBox
-            isMulti={false}
-            options={toppingOptions}
-            onChange={handleToppingChanged}
-          />
-        </div>
-        <div className="">
-          <SelectionBox
-            isMulti={false}
-            options={milkOptions ?? []}
-            onChange={handleMilkChanged}
-          />
-        </div>
-        <input
-          type="number"
-          min="1"
-          max="6"
-          className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
-          placeholder="Enter pump of chocolate sauce"
-          defaultValue={0}
-          disabled={type !== DrinkType.Hot}
-          onChange={(e) => handlePumpOfChocolateChanged(Number(e.target.value))}
-        />
-        <input
-          type="number"
-          min="1"
-          defaultValue={1}
-          className="border rounded max-w-[100px] bg-gray-50 text-gray-800"
-          placeholder="Enter quantity"
-          onChange={(e) => handleQuantityChanged(Number(e.target.value))}
-        />
-        <p>{`$${cost}`}</p>
-        <button
-          className="bg-buttonBgColor w-12 rounded text-buttonColor"
-          onClick={handleCoffeeItemAdded}
-        >
-          Add
-        </button>
       </div>
       <hr />
       {error && (
