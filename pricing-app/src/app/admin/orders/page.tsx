@@ -20,7 +20,7 @@ const OrderPage: FC = () => {
   }
 
   const handleUpdatedOrder = async (id: string) => {
-    const newItem = await updateData(`https://gemo-training-technical-assignment-p8kdqm65x-thuynguyen0807.vercel.app/order/${id}`, {status: newStatus.current});
+    const newItem = await updateData(`https://gemo-training-technical-assignment-p8kdqm65x-thuynguyen0807.vercel.app/order/${id}`, { status: newStatus.current });
     console.log("newItem", newItem);
   };
 
@@ -32,12 +32,12 @@ const OrderPage: FC = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen p-16">
+    <div className="flex min-h-screen p-2 md:p-4 xl:p-16">
       <div className="border w-full bg-white rounded-md">
         <div className="flex justify-center mt-8">
           <h1 className=" font-black text-xl">Garden Cafeteria Admin</h1>
         </div>
-        <div className="p-8">
+        <div className="p-2 md:p-4 xl:p-8">
           {items.map((item) => (
             <OrderItemView
               id={item._id ?? ""}

@@ -69,12 +69,12 @@ const OrderPage: FC = () => {
       <div className="absolute top-4 right-8 flex">
         <ThemeSelection />
       </div>
-      <div className="flex min-h-screen p-16">
+      <div className="flex min-h-screen p-2 md:p-4 xl:p-16">
         <div className="border w-full bg-background text-text rounded-md">
           <div className="flex justify-center mt-8">
             <h1 className=" font-black text-xl">Garden Cafeteria</h1>
           </div>
-          <div className="p-8">
+          <div className="p-2 md:p-4 xl:p-8">
             <div className="mb-12">
               <div className="flex">
                 <PlusIcon />
@@ -84,7 +84,7 @@ const OrderPage: FC = () => {
               </div>
 
               {drinkTypes.map((item) => (
-                <div className="pl-8 pt-4" key={item}>
+                <div className="pl-2 pt-4" key={item}>
                   <OrderCoffeeItem
                     toppingOptions={toppingOptions}
                     sizeOptions={
@@ -109,7 +109,7 @@ const OrderPage: FC = () => {
                 </div>
               </div>
               {breakfastItems.map((item) => (
-                <div className="pl-8 pt-4" key={item}>
+                <div className="pl-2 pt-4" key={item}>
                   <OrderBreakfastItem
                     type={item}
                     toppingOptions={
@@ -124,7 +124,7 @@ const OrderPage: FC = () => {
             </div>
             {/* Cart */}
             <p className="font-black mt-6 ml-8 text-xl">Cart</p>
-            <div className="pl-8 pt-4">
+            <div className="pl-2 pt-4">
               {items.length > 0 ? (
                 items.map((item, index) => (
                   <OrderCoffeeItemAdded
